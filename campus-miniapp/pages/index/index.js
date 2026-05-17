@@ -97,7 +97,7 @@ Page({
   },
 
   loadNotes() {
-    if (!this.data.hasMore || this.data.loading) return;
+    if (!this.data.hasMore || this.data.loading) return Promise.resolve();
     this.setData({ loading: true });
     const campus = this.data.currentSchool;
     return api.getNotes(this.data.page, campus, this.data.sort).then(res => {
