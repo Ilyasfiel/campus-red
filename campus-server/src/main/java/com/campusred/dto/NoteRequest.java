@@ -1,16 +1,24 @@
 package com.campusred.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 
 public class NoteRequest {
     @NotBlank(message = "标题不能为空")
+    @Size(max = 200, message = "标题不能超过200字")
     private String title;
 
+    @Size(max = 5000, message = "内容不能超过5000字")
     private String content;
+
+    @Size(max = 9, message = "最多9张图片")
     private List<String> images;
+
+    @Size(max = 10, message = "最多10个标签")
     private List<String> tags;
+
+    @Size(max = 200, message = "位置信息过长")
     private String location;
 
     public String getTitle() { return title; }

@@ -27,7 +27,8 @@ public class TreeHoleController {
     }
 
     @PostMapping
-    public Result<TreeHole> create(@RequestBody Map<String, String> body) {
+    public Result<TreeHole> create(@RequestBody Map<String, String> body,
+                                    @CurrentUserId Long userId) {
         return Result.ok(treeHoleService.create(body.get("content"),
                 body.getOrDefault("tag", "")));
     }
@@ -45,7 +46,8 @@ public class TreeHoleController {
 
     @PostMapping("/{id}/comments")
     public Result<TreeHoleComment> addComment(@PathVariable Long id,
-                                               @RequestBody Map<String, String> body) {
+                                               @RequestBody Map<String, String> body,
+                                               @CurrentUserId Long userId) {
         return Result.ok(treeHoleService.addComment(id, body.get("content")));
     }
 }

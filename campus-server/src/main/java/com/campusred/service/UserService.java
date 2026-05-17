@@ -17,19 +17,24 @@ public class UserService {
     private final UserMapper userMapper;
     private final NoteMapper noteMapper;
     private final FollowMapper followMapper;
+    private final WechatClient wechatClient;
 
-    public UserService(UserMapper userMapper, NoteMapper noteMapper, FollowMapper followMapper) {
+    public UserService(UserMapper userMapper, NoteMapper noteMapper,
+                       FollowMapper followMapper, WechatClient wechatClient) {
         this.userMapper = userMapper;
         this.noteMapper = noteMapper;
         this.followMapper = followMapper;
+        this.wechatClient = wechatClient;
     }
 
     public User login(String code, String nickname, String avatarUrl, String campus) {
+        WechatClient.WxSession session = wechatClient.code2Session(code);
+
         User user = userMapper.selectOne(
-                new LambdaQueryWrapper<User>().eq(User::getOpenid, code));
+                new LambdaQueryWrapper<User>().eq(User::getOpenid, session.openid()));
         if (user == null) {
             user = new User();
-            user.setOpenid(code);
+            user.setOpenid(session.openid());
             user.setNickname(nickname != null ? nickname : "校园用户" + UUID.randomUUID().toString().substring(0, 6));
             user.setAvatarUrl(avatarUrl != null ? avatarUrl : "");
             user.setCampus(campus != null ? campus : "");
@@ -77,11 +82,6 @@ public class UserService {
     }
 
     public java.util.List<String> getSchoolList() {
-        return userMapper.selectList(null).stream()
-                .map(User::getCampus)
-                .filter(c -> c != null && !c.trim().isEmpty())
-                .distinct()
-                .sorted()
-                .collect(java.util.stream.Collectors.toList());
+        return userMapper.selectDistinctCampuses();
     }
 }

@@ -27,7 +27,7 @@ Page({
     }
 
     // 定时刷新
-    this.refreshTimer = setInterval(() => this.loadMessages(), 3000);
+    this.refreshTimer = setInterval(() => this.loadMessages(), 10000);
   },
 
   onUnload() {

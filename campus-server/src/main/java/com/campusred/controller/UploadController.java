@@ -1,5 +1,6 @@
 package com.campusred.controller;
 
+import com.campusred.auth.CurrentUserId;
 import com.campusred.dto.Result;
 import com.campusred.service.FileService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,8 @@ public class UploadController {
     }
 
     @PostMapping
-    public Result<Map<String, String>> upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public Result<Map<String, String>> upload(@RequestParam("file") MultipartFile file,
+                                               @CurrentUserId Long userId) throws IOException {
         String url = fileService.upload(file);
         return Result.ok(Map.of("url", url));
     }

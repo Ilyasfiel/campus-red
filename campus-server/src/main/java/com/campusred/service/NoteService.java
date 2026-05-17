@@ -122,11 +122,12 @@ public class NoteService {
         return toNoteVO(note, currentUserId);
     }
 
-    public void deleteNote(Long noteId, Long userId) {
+    public boolean deleteNote(Long noteId, Long userId) {
         Note note = noteMapper.selectById(noteId);
-        if (note != null && note.getUserId().equals(userId)) {
-            noteMapper.deleteById(noteId);
-        }
+        if (note == null) return false;
+        if (!note.getUserId().equals(userId)) return false;
+        noteMapper.deleteById(noteId);
+        return true;
     }
 
     public Page<NoteVO> getUserNotes(Long userId, int page, int size, Long currentUserId) {

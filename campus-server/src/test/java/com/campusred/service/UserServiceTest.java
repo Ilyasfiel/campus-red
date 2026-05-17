@@ -23,31 +23,38 @@ class UserServiceTest {
     private NoteMapper noteMapper;
     @Mock
     private FollowMapper followMapper;
+    @Mock
+    private WechatClient wechatClient;
 
     @InjectMocks
     private UserService userService;
 
     @Test
     void loginNewUser() {
+        when(wechatClient.code2Session("code-abc"))
+                .thenReturn(new WechatClient.WxSession("real-openid-123", null, null));
         when(userMapper.selectOne(any())).thenReturn(null);
 
-        User user = userService.login("wx-openid-123", "测试用户", "http://avatar.jpg", "河北大学");
+        User user = userService.login("code-abc", "测试用户", "http://avatar.jpg", "河北大学");
 
         assertNotNull(user);
         assertEquals("测试用户", user.getNickname());
-        assertEquals("wx-openid-123", user.getOpenid());
+        assertEquals("real-openid-123", user.getOpenid());
     }
 
     @Test
     void loginExistingUser() {
+        when(wechatClient.code2Session("code-abc"))
+                .thenReturn(new WechatClient.WxSession("real-openid-123", null, null));
+
         User existing = new User();
         existing.setId(1L);
-        existing.setOpenid("wx-openid-123");
+        existing.setOpenid("real-openid-123");
         existing.setNickname("老用户");
 
         when(userMapper.selectOne(any())).thenReturn(existing);
 
-        User user = userService.login("wx-openid-123", null, null, null);
+        User user = userService.login("code-abc", null, null, null);
 
         assertEquals(1L, user.getId());
         assertEquals("老用户", user.getNickname());

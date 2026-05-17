@@ -37,22 +37,20 @@ public class MessageService {
     }
 
     public List<Map<String, Object>> getConversations(Long userId) {
-        // 找到所有有私信往来的用户
-        List<Message> sent = messageMapper.selectList(
-                new LambdaQueryWrapper<Message>().eq(Message::getFromUserId, userId));
-        List<Message> received = messageMapper.selectList(
-                new LambdaQueryWrapper<Message>().eq(Message::getToUserId, userId));
+        List<Long> partnerIds = messageMapper.selectDistinctPartnerIds(userId);
+        if (partnerIds.isEmpty()) return List.of();
 
-        Set<Long> partnerIds = new HashSet<>();
-        sent.forEach(m -> partnerIds.add(m.getToUserId()));
-        received.forEach(m -> partnerIds.add(m.getFromUserId()));
+        // 批量查用户
+        List<User> partners = userMapper.selectBatchIds(partnerIds);
+        Map<Long, User> userMap = partners.stream()
+                .collect(Collectors.toMap(User::getId, u -> u));
 
         List<Map<String, Object>> conversations = new ArrayList<>();
         for (Long partnerId : partnerIds) {
-            User partner = userMapper.selectById(partnerId);
+            User partner = userMap.get(partnerId);
             if (partner == null) continue;
 
-            // 获取最后一条消息
+            // 最后一条消息
             List<Message> msgs = messageMapper.selectList(
                     new LambdaQueryWrapper<Message>()
                             .and(w -> w.eq(Message::getFromUserId, userId).eq(Message::getToUserId, partnerId)
@@ -60,7 +58,7 @@ public class MessageService {
                             .orderByDesc(Message::getCreateTime)
                             .last("LIMIT 1"));
 
-            // 统计未读
+            // 未读计数
             long unread = messageMapper.selectCount(
                     new LambdaQueryWrapper<Message>()
                             .eq(Message::getFromUserId, partnerId)
@@ -91,12 +89,19 @@ public class MessageService {
                                 .or(q -> q.eq(Message::getFromUserId, partnerId).eq(Message::getToUserId, userId)))
                         .orderByAsc(Message::getCreateTime));
 
-        // 标记对方发来的消息为已读
+        // 批量标记已读
+        new com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper<Message>()
+                .eq(Message::getToUserId, userId)
+                .eq(Message::getFromUserId, partnerId)
+                .eq(Message::getIsRead, 0)
+                .set(Message::getIsRead, 1);
+        messageMapper.update(null, new com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper<Message>()
+                .eq(Message::getToUserId, userId)
+                .eq(Message::getFromUserId, partnerId)
+                .eq(Message::getIsRead, 0)
+                .set(Message::getIsRead, 1));
+
         for (Message m : msgs) {
-            if (m.getToUserId().equals(userId) && m.getIsRead() == 0) {
-                m.setIsRead(1);
-                messageMapper.updateById(m);
-            }
             User from = userMapper.selectById(m.getFromUserId());
             m.setFromUser(from);
         }

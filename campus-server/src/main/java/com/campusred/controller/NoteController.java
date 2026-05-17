@@ -47,7 +47,8 @@ public class NoteController {
 
     @DeleteMapping("/{id}")
     public Result<?> delete(@PathVariable Long id, @CurrentUserId Long userId) {
-        noteService.deleteNote(id, userId);
+        boolean deleted = noteService.deleteNote(id, userId);
+        if (!deleted) return Result.fail(403, "无权删除或笔记不存在");
         return Result.ok();
     }
 

@@ -28,6 +28,10 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+wechat:
+  app-id: ${WECHAT_APP_ID:your-wechat-app-id}
+  app-secret: ${WECHAT_APP_SECRET:your-wechat-app-secret}
+
 jwt:
   secret: ${JWT_SECRET:campus-red-jwt-secret-key-2024-please-change-in-production}
   expiration: 604800000

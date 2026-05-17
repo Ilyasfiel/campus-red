@@ -21,7 +21,10 @@ Page({
     const profileId = options.id || viewId || app.getUserId();
     app.viewProfileId = null; // 清除
     if (!profileId) {
-      app.devLogin(() => this.loadProfile(profileId));
+      app.devLogin(() => {
+        this.setData({ profileId: app.getUserId() });
+        this.loadProfile(app.getUserId());
+      });
       return;
     }
     this.setData({ profileId });

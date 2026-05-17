@@ -5,6 +5,7 @@ import com.campusred.entity.Follow;
 import com.campusred.entity.User;
 import com.campusred.mapper.FollowMapper;
 import com.campusred.mapper.UserMapper;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,20 +33,23 @@ public class FollowService {
         if (exist != null) {
             followMapper.deleteById(exist.getId());
             return false;
-        } else {
-            Follow follow = new Follow();
-            follow.setFollowerId(followerId);
-            follow.setFolloweeId(followeeId);
-            followMapper.insert(follow);
-
-            // 给被关注者发通知
-            User fromUser = userMapper.selectById(followerId);
-            String fromName = fromUser != null ? fromUser.getNickname() : "有人";
-            messageService.createNotification(followeeId, "follow",
-                    fromName + " 关注了你", "", null);
-
-            return true;
         }
+
+        Follow follow = new Follow();
+        follow.setFollowerId(followerId);
+        follow.setFolloweeId(followeeId);
+        try {
+            followMapper.insert(follow);
+        } catch (DuplicateKeyException e) {
+            return false;
+        }
+
+        User fromUser = userMapper.selectById(followerId);
+        String fromName = fromUser != null ? fromUser.getNickname() : "有人";
+        messageService.createNotification(followeeId, "follow",
+                fromName + " 关注了你", "", null);
+
+        return true;
     }
 
     public boolean isFollowing(Long followerId, Long followeeId) {

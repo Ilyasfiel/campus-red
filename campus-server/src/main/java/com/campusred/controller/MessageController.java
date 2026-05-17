@@ -19,8 +19,13 @@ public class MessageController {
     @PostMapping("/send")
     public Result<?> send(@RequestBody Map<String, Object> body,
                            @CurrentUserId Long fromUserId) {
-        Long toUserId = Long.parseLong(body.get("toUserId").toString());
-        String content = body.get("content").toString();
+        Object toObj = body.get("toUserId");
+        Object contentObj = body.get("content");
+        if (toObj == null || contentObj == null) return Result.fail(400, "参数不完整");
+        String content = contentObj.toString().trim();
+        if (content.isEmpty()) return Result.fail(400, "消息不能为空");
+        if (content.length() > 2000) return Result.fail(400, "消息过长");
+        Long toUserId = Long.parseLong(toObj.toString());
         messageService.sendMessage(fromUserId, toUserId, content);
         return Result.ok();
     }
@@ -65,10 +70,13 @@ public class MessageController {
     @PostMapping("/notifications")
     public Result<?> createNotification(@RequestBody Map<String, Object> body,
                                          @CurrentUserId Long userId) {
-        String type = body.get("type").toString();
-        String title = body.get("title").toString();
-        String content = body.containsKey("content") ? body.get("content").toString() : "";
-        Long relatedId = body.containsKey("relatedId") ? Long.parseLong(body.get("relatedId").toString()) : null;
+        Object typeObj = body.get("type");
+        Object titleObj = body.get("title");
+        if (typeObj == null || titleObj == null) return Result.fail(400, "参数不完整");
+        String type = typeObj.toString();
+        String title = titleObj.toString();
+        String content = body.get("content") != null ? body.get("content").toString() : "";
+        Long relatedId = body.get("relatedId") != null ? Long.parseLong(body.get("relatedId").toString()) : null;
         messageService.createNotification(userId, type, title, content, relatedId);
         return Result.ok();
     }

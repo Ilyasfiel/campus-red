@@ -26,9 +26,20 @@ public class CommentController {
     @PostMapping
     public Result<CommentVO> add(@RequestBody Map<String, Object> body,
                                   @CurrentUserId Long userId) {
-        Long noteId = Long.parseLong(body.get("noteId").toString());
-        Long parentId = body.get("parentId") != null ? Long.parseLong(body.get("parentId").toString()) : null;
-        String content = body.get("content").toString();
+        Object noteIdObj = body.get("noteId");
+        Object contentObj = body.get("content");
+        if (noteIdObj == null || contentObj == null) {
+            return Result.fail(400, "参数不完整");
+        }
+        String content = contentObj.toString().trim();
+        if (content.isEmpty()) return Result.fail(400, "评论内容不能为空");
+        if (content.length() > 1000) return Result.fail(400, "评论内容过长");
+
+        Long noteId = Long.parseLong(noteIdObj.toString());
+        Long parentId = null;
+        if (body.get("parentId") != null) {
+            parentId = Long.parseLong(body.get("parentId").toString());
+        }
         return Result.ok(commentService.addComment(userId, noteId, parentId, content));
     }
 }
