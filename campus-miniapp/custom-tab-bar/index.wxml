@@ -1,0 +1,9 @@
+<view class="tab-bar">
+  <view wx:for="{{list}}" wx:key="index" class="tab-item {{selected === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}" data-path="{{item.pagePath}}">
+    <view class="tab-icon-wrap">
+      <image class="tab-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}" />
+      <view wx:if="{{item.badge > 0 && index !== 2}}" class="tab-badge">{{item.badge > 99 ? '99+' : item.badge}}</view>
+    </view>
+    <text class="tab-text">{{item.text}}</text>
+  </view>
+</view>

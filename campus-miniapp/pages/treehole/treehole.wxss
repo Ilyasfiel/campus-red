@@ -1,0 +1,183 @@
+.treehole-header {
+  text-align: center;
+  padding: 30rpx 0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.header-desc {
+  font-size: 24rpx;
+  color: #bbb;
+}
+
+.hole-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+
+.hole-tag {
+  display: inline-block;
+  background: rgba(255,107,107,0.1);
+  color: #ff6b6b;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  margin-bottom: 12rpx;
+}
+
+.hole-content {
+  font-size: 30rpx;
+  line-height: 1.7;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.hole-footer {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+}
+
+.hole-action {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.hole-time {
+  font-size: 22rpx;
+  color: #ccc;
+  margin-left: auto;
+}
+
+/* 评论 */
+.hole-comments {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.hc-item {
+  padding: 12rpx 0;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.hc-input-row {
+  margin-top: 12rpx;
+}
+
+.hc-input {
+  background: #f6f6f6;
+  border-radius: 24rpx;
+  padding: 12rpx 20rpx;
+  font-size: 26rpx;
+  height: 60rpx;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 140rpx;
+  right: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 20rpx rgba(255,107,107,0.4);
+  z-index: 50;
+}
+
+.fab-text {
+  color: #fff;
+  font-size: 50rpx;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* 发布弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 24rpx;
+}
+
+.tag-picker {
+  margin-bottom: 20rpx;
+}
+
+.tag-select {
+  background: #f6f6f6;
+  padding: 16rpx 20rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.modal-textarea {
+  width: 100%;
+  height: 200rpx;
+  background: #f6f6f6;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 24rpx;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-cancel, .modal-submit {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.modal-cancel {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.modal-submit {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  color: #fff;
+}
+
+.empty-tip {
+  text-align: center;
+  padding-top: 100rpx;
+}

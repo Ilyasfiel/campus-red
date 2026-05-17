@@ -1,0 +1,57 @@
+<view class="container">
+  <!-- 顶部提示 -->
+  <view class="treehole-header">
+    <text class="header-title">🕳 校园树洞</text>
+    <text class="header-desc">这里没人知道你是谁，说出你的心里话</text>
+  </view>
+
+  <!-- 树洞帖子列表 -->
+  <view wx:for="{{holes}}" wx:key="id" class="hole-card">
+    <view class="hole-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
+    <text class="hole-content">{{item.content}}</text>
+    <view class="hole-footer">
+      <view class="hole-action" bindtap="likeHole" data-id="{{item.id}}">
+        <text>❤ {{item.likeCount || 0}}</text>
+      </view>
+      <view class="hole-action" bindtap="toggleComments" data-id="{{item.id}}">
+        <text>💬 {{item.commentCount || 0}}</text>
+      </view>
+      <text class="hole-time">{{item.createTime}}</text>
+    </view>
+
+    <!-- 评论展开 -->
+    <view wx:if="{{expandedId === item.id}}" class="hole-comments">
+      <view wx:for="{{item._comments}}" wx:key="id" class="hc-item">
+        <text class="hc-content">{{item.content}}</text>
+      </view>
+      <view class="hc-input-row">
+        <input class="hc-input" placeholder="匿名评论..." value="{{commentText}}" data-id="{{item.id}}" bindinput="onCommentInput" confirm-type="send" bindconfirm="sendComment" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{holes.length === 0 && !loading}}" class="empty-tip">
+    <text class="text-muted">树洞还是空的，快来写第一条吧</text>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="fab" bindtap="showPublish">
+    <text class="fab-text">+</text>
+  </view>
+
+  <!-- 发布弹窗 -->
+  <view wx:if="{{showModal}}" class="modal-mask" bindtap="hideModal">
+    <view class="modal" catchtap="">
+      <text class="modal-title">写一条树洞</text>
+      <picker class="tag-picker" value="{{tagIndex}}" range="{{tags}}" bindchange="onTagChange">
+        <view class="tag-select">{{tags[tagIndex] || '选择心情'}}</view>
+      </picker>
+      <textarea class="modal-textarea" placeholder="说你想说的..." value="{{publishText}}" bindinput="onPublishInput" maxlength="500" />
+      <view class="modal-btns">
+        <button class="modal-cancel" bindtap="hideModal">取消</button>
+        <button class="modal-submit" bindtap="publish">匿名发布</button>
+      </view>
+    </view>
+  </view>
+</view>

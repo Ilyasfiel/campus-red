@@ -1,0 +1,58 @@
+<view class="container">
+  <!-- 顶部切换标签 -->
+  <view class="tab-bar flex-row">
+    <view class="tab-item {{activeTab === 'chats' ? 'active' : ''}}" bindtap="switchTab" data-tab="chats">
+      <text>私信</text>
+      <view wx:if="{{unreadChats > 0}}" class="badge">{{unreadChats > 99 ? '99+' : unreadChats}}</view>
+    </view>
+    <view class="tab-item {{activeTab === 'notifs' ? 'active' : ''}}" bindtap="switchTab" data-tab="notifs">
+      <text>通知</text>
+      <view wx:if="{{unreadNotifs > 0}}" class="badge">{{unreadNotifs > 99 ? '99+' : unreadNotifs}}</view>
+    </view>
+  </view>
+
+  <!-- 私信列表 -->
+  <view wx:if="{{activeTab === 'chats'}}">
+    <view wx:if="{{conversations.length > 0}}">
+      <view wx:for="{{conversations}}" wx:key="user.id" class="chat-item flex-row" bindtap="goChat" data-user-id="{{item.user.id}}" data-user-name="{{item.user.nickname}}">
+        <view class="avatar-wrap">
+          <image class="avatar" src="{{item.user.avatarUrl || '/images/default-avatar.png'}}" />
+          <view wx:if="{{item.unread > 0}}" class="dot"></view>
+        </view>
+        <view class="chat-info">
+          <view class="flex-row chat-top">
+            <text class="chat-name">{{item.user.nickname}}</text>
+            <text class="chat-time text-muted">{{item.lastTime}}</text>
+          </view>
+          <text class="chat-preview text-ellipsis">{{item.lastMessage || '暂无消息'}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-tip">
+      <text class="empty-icon">💬</text>
+      <text class="text-muted">暂无私信</text>
+    </view>
+  </view>
+
+  <!-- 通知列表 -->
+  <view wx:if="{{activeTab === 'notifs'}}">
+    <view wx:if="{{notifications.length > 0}}">
+      <view wx:if="{{unreadNotifs > 0}}" class="read-all-bar" bindtap="markAllRead">
+        <text>全部标为已读</text>
+      </view>
+      <view wx:for="{{notifications}}" wx:key="id" class="notif-item flex-row {{item.isRead ? '' : 'unread'}}" bindtap="markRead" data-id="{{item.id}}">
+        <text class="notif-icon">{{item.type === 'like' ? '❤' : item.type === 'comment' ? '💬' : item.type === 'follow' ? '👤' : item.type === 'collect' ? '⭐' : '🔔'}}</text>
+        <view class="notif-body">
+          <text class="notif-title">{{item.title}}</text>
+          <text class="notif-content text-muted">{{item.content}}</text>
+          <text class="notif-time text-muted">{{item.createTime}}</text>
+        </view>
+        <view wx:if="{{!item.isRead}}" class="unread-dot"></view>
+      </view>
+    </view>
+    <view wx:else class="empty-tip">
+      <text class="empty-icon">🔔</text>
+      <text class="text-muted">暂无通知</text>
+    </view>
+  </view>
+</view>

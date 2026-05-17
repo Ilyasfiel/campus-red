@@ -1,0 +1,87 @@
+<view class="container" wx:if="{{profile}}">
+  <!-- 头部信息 -->
+  <view class="profile-header card">
+    <image class="avatar-lg" src="{{profile.avatarUrl || '/images/default-avatar.png'}}" />
+    <text class="profile-name">{{profile.nickname}}</text>
+    <text class="text-muted">{{profile.campus || '未设置学校'}}</text>
+    <text class="bio" wx:if="{{profile.bio}}">{{profile.bio}}</text>
+
+    <!-- 笔记数 -->
+    <view class="note-count-row">
+      <text class="note-count-num">{{profile.noteCount || 0}}</text>
+      <text class="text-muted">笔记</text>
+    </view>
+
+    <!-- 粉丝和关注并排 -->
+    <view class="follow-row">
+      <view class="follow-card" bindtap="showFollowList" data-type="followers">
+        <text class="follow-num">{{profile.followerCount || 0}}</text>
+        <text class="follow-label">粉丝</text>
+      </view>
+      <view class="follow-card" bindtap="showFollowList" data-type="following">
+        <text class="follow-num">{{profile.followingCount || 0}}</text>
+        <text class="follow-label">关注</text>
+      </view>
+    </view>
+
+    <!-- 关注/编辑按钮 -->
+    <button class="follow-btn" bindtap="toggleFollow" wx:if="{{!isSelf}}">
+      {{profile.isFollowed ? '已关注' : '+ 关注'}}
+    </button>
+    <button class="edit-btn" bindtap="editProfile" wx:if="{{isSelf}}">编辑资料</button>
+  </view>
+
+  <!-- 用户笔记列表 -->
+  <view class="user-notes">
+    <text class="section-title">TA的笔记</text>
+    <view class="waterfall">
+      <view class="waterfall-col">
+        <view wx:for="{{leftNotes}}" wx:key="id" class="note-card card" bindtap="goDetail" data-id="{{item.id}}">
+          <image wx:if="{{item.images.length > 0}}" class="note-cover" src="{{item.images[0]}}" mode="widthFix" lazy-load />
+          <view class="note-info">
+            <text class="note-title text-ellipsis">{{item.title}}</text>
+            <text class="text-muted">{{item.likeCount}} 赞</text>
+          </view>
+        </view>
+      </view>
+      <view class="waterfall-col">
+        <view wx:for="{{rightNotes}}" wx:key="id" class="note-card card" bindtap="goDetail" data-id="{{item.id}}">
+          <image wx:if="{{item.images.length > 0}}" class="note-cover" src="{{item.images[0]}}" mode="widthFix" lazy-load />
+          <view class="note-info">
+            <text class="note-title text-ellipsis">{{item.title}}</text>
+            <text class="text-muted">{{item.likeCount}} 赞</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{userNotes.length === 0}}" class="empty-tip">
+      <text class="text-muted">还没有发布笔记</text>
+    </view>
+  </view>
+</view>
+
+<!-- 粉丝/关注弹窗 -->
+<view wx:if="{{showListModal}}" class="modal-mask" bindtap="closeListModal">
+  <view class="list-modal" catchtap="">
+    <view class="list-modal-header">
+      <text class="list-modal-title">{{listTitle}}</text>
+      <text class="list-modal-close" bindtap="closeListModal">✕</text>
+    </view>
+    <scroll-view scroll-y class="list-modal-body">
+      <view wx:if="{{userList.length > 0}}">
+        <view wx:for="{{userList}}" wx:key="id" class="list-user-item flex-row" bindtap="goUserProfile" data-id="{{item.id}}">
+          <image class="avatar-sm" src="{{item.avatarUrl || '/images/default-avatar.png'}}" />
+          <view class="list-user-info">
+            <text class="list-user-name">{{item.nickname}}</text>
+            <text class="text-muted">{{item.campus || '未设置学校'}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-tip">
+        <text class="text-muted">暂无数据</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="empty-tip"><text class="text-muted">加载中...</text></view>

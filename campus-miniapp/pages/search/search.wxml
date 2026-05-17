@@ -1,0 +1,33 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar flex-row">
+    <input class="search-input" placeholder="搜索笔记、标签..." value="{{keyword}}" bindinput="onInput" confirm-type="search" bindconfirm="doSearch" />
+    <button class="search-btn" bindtap="doSearch">搜索</button>
+  </view>
+
+  <!-- 热门标签 -->
+  <view class="hot-tags" wx:if="{{!searched}}">
+    <text class="section-title">热门标签</text>
+    <view class="tag-list">
+      <text wx:for="{{hotTags}}" wx:key="index" class="tag" bindtap="searchTag" data-tag="{{item}}">#{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view wx:if="{{searched}}">
+    <text class="section-title">搜索结果: {{keyword}}</text>
+    <view wx:if="{{results.length > 0}}">
+      <view wx:for="{{results}}" wx:key="id" class="search-card card flex-row" bindtap="goDetail" data-id="{{item.id}}">
+        <image wx:if="{{item.images.length > 0}}" class="search-cover" src="{{item.images[0]}}" mode="aspectFill" />
+        <view class="search-info">
+          <text class="search-title text-ellipsis">{{item.title}}</text>
+          <text class="search-content text-ellipsis">{{item.content}}</text>
+          <text class="text-muted">{{item.user.nickname}} · {{item.likeCount}} 赞</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-tip">
+      <text class="text-muted">没有找到相关笔记</text>
+    </view>
+  </view>
+</view>

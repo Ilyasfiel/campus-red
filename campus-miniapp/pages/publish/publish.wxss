@@ -1,0 +1,102 @@
+.form {
+  padding: 20rpx 0;
+}
+
+.image-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.image-item {
+  width: 200rpx;
+  height: 200rpx;
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.image-item image {
+  width: 100%;
+  height: 100%;
+}
+
+.remove-btn {
+  position: absolute;
+  top: -4rpx;
+  right: -4rpx;
+  width: 44rpx;
+  height: 44rpx;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.add-image {
+  width: 200rpx;
+  height: 200rpx;
+  background: #fff;
+  border: 2rpx dashed #ddd;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  font-size: 60rpx;
+  color: #ccc;
+}
+
+.title-input {
+  width: 100%;
+  font-size: 34rpx;
+  font-weight: 600;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.content-input {
+  width: 100%;
+  min-height: 260rpx;
+  font-size: 28rpx;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.tag-section {
+  margin-bottom: 20rpx;
+}
+
+.tag-input {
+  width: 100%;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  box-sizing: border-box;
+}
+
+.location-section {
+  padding: 24rpx 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 40rpx;
+}
+
+.publish-btn {
+  width: 100%;
+  box-sizing: border-box;
+}

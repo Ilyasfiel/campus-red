@@ -1,0 +1,100 @@
+<wxs src="../../utils/time.wxs" module="time" />
+
+<view class="container" wx:if="{{note}}">
+  <!-- 作者信息 -->
+  <view class="author-bar" bindtap="goProfile" data-id="{{note.user.id}}">
+    <image class="avatar" src="{{note.user.avatarUrl || '/images/default-avatar.png'}}" />
+    <view class="author-info">
+      <text class="author-name">{{note.user.nickname}}</text>
+      <text class="text-muted author-campus">{{note.user.campus || '未设置学校'}}</text>
+    </view>
+    <view class="author-btns" wx:if="{{!isSelf}}">
+      <text class="follow-pill" bindtap="toggleFollow" catchtap="toggleFollow">{{note.user.isFollowed ? '已关注' : '关注'}}</text>
+      <button class="share-pill" open-type="share" catchtap="">📤</button>
+    </view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="note-title">{{note.title}}</view>
+
+  <!-- 正文 -->
+  <view class="note-content">{{note.content}}</view>
+
+  <!-- 图片轮播 -->
+  <swiper wx:if="{{note.images && note.images.length > 0}}" class="image-swiper" indicator-dots indicator-color="#ddd" indicator-active-color="#ff6b6b">
+    <swiper-item wx:for="{{note.images}}" wx:key="index">
+      <image src="{{item}}" mode="widthFix" class="note-image" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 标签 -->
+  <view class="tags" wx:if="{{note.tags && note.tags.length > 0}}">
+    <text wx:for="{{note.tags}}" wx:key="index" class="tag" bindtap="searchTag" data-tag="{{item}}">#{{item}}</text>
+  </view>
+
+  <!-- 位置 + 时间 -->
+  <view class="meta-row">
+    <text class="text-muted" wx:if="{{note.location}}">📍 {{note.location}}</text>
+    <text class="text-muted publish-time">{{time.ago(note.createTime)}} 发布</text>
+    <text class="text-muted view-count">👁 {{note.viewCount || 0}} 浏览</text>
+  </view>
+
+  <!-- 操作栏 -->
+  <view class="action-bar">
+    <view class="action-item {{note.isLiked ? 'liked' : ''}}" bindtap="toggleLike">
+      <text class="action-emoji">{{note.isLiked ? '❤️' : '🤍'}}</text>
+      <text class="action-count">{{note.likeCount || 0}}</text>
+    </view>
+    <view class="action-item {{note.isCollected ? 'collected' : ''}}" bindtap="toggleCollect">
+      <text class="action-emoji">{{note.isCollected ? '⭐' : '☆'}}</text>
+      <text class="action-count">{{note.collectCount || 0}}</text>
+    </view>
+    <view class="action-item" bindtap="scrollToComments">
+      <text class="action-emoji">💬</text>
+      <text class="action-count">{{note.commentCount || 0}}</text>
+    </view>
+  </view>
+
+  <!-- 评论列表 -->
+  <view class="comment-section" id="comments">
+    <view class="comment-title">评论 ({{comments.length}})</view>
+    <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+      <image class="avatar-sm" src="{{item.user.avatarUrl || '/images/default-avatar.png'}}" />
+      <view class="comment-body">
+        <view class="flex-row">
+          <text class="comment-name">{{item.user.nickname}}</text>
+          <text class="text-muted comment-time">{{time.ago(item.createTime)}}</text>
+        </view>
+        <text class="comment-content">{{item.content}}</text>
+        <view wx:if="{{item.replies && item.replies.length > 0}}" class="replies">
+          <view wx:for="{{item.replies}}" wx:key="id" wx:for-item="reply" class="reply-item">
+            <text class="reply-name">{{reply.user.nickname}}</text>
+            <text>{{reply.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{comments.length === 0}}" class="empty-comment">
+      <text class="text-muted">还没有评论，来抢沙发吧</text>
+    </view>
+  </view>
+
+  <!-- 底部占位（给输入框留空间） -->
+  <view style="height: 120rpx;"></view>
+</view>
+
+<!-- 评论输入栏 -->
+<view class="input-bar">
+  <view class="input-box">
+    <input class="msg-input" placeholder="说点什么..." value="{{commentText}}" bindinput="onCommentInput" confirm-type="send" bindconfirm="sendComment" adjust-position="{{true}}" />
+    <text class="send-btn" bindtap="sendComment">发送</text>
+  </view>
+  <view class="input-like {{note.isLiked ? 'liked' : ''}}" bindtap="toggleLike">
+    <text>{{note.isLiked ? '❤️' : '🤍'}} {{note.likeCount || 0}}</text>
+  </view>
+  <view class="input-collect {{note.isCollected ? 'collected' : ''}}" bindtap="toggleCollect">
+    <text>{{note.isCollected ? '⭐' : '☆'}} {{note.collectCount || 0}}</text>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="empty-tip"><text class="text-muted">加载中...</text></view>

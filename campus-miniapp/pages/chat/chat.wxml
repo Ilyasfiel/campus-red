@@ -1,0 +1,22 @@
+<!-- 私信聊天页面 -->
+<view class="chat-container">
+  <!-- 消息列表 -->
+  <scroll-view class="msg-list" scroll-y scroll-into-view="msg-{{messages.length - 1}}" scroll-with-animation>
+    <view wx:for="{{messages}}" wx:key="id" id="msg-{{index}}" class="msg-item {{item.fromUserId === myUserId ? 'msg-right' : 'msg-left'}}">
+      <image wx:if="{{item.fromUserId !== myUserId}}" class="msg-avatar avatar-sm" src="{{item.fromUser.avatarUrl || '/images/default-avatar.png'}}" />
+      <view class="msg-bubble {{item.fromUserId === myUserId ? 'bubble-right' : 'bubble-left'}}">
+        <text>{{item.content}}</text>
+      </view>
+      <image wx:if="{{item.fromUserId === myUserId}}" class="msg-avatar avatar-sm" src="{{item.fromUser ? item.fromUser.avatarUrl || '/images/default-avatar.png' : '/images/default-avatar.png'}}" />
+    </view>
+    <view wx:if="{{messages.length === 0}}" class="empty-msg">
+      <text class="text-muted">开始聊天吧</text>
+    </view>
+  </scroll-view>
+
+  <!-- 输入栏 -->
+  <view class="input-bar flex-row">
+    <input class="msg-input" placeholder="发送消息..." value="{{inputText}}" bindinput="onInput" confirm-type="send" bindconfirm="send" />
+    <button class="send-btn" bindtap="send" size="mini">发送</button>
+  </view>
+</view>

@@ -1,0 +1,130 @@
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 24rpx;
+  margin-bottom: 30rpx;
+}
+
+.profile-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  margin-top: 20rpx;
+}
+
+.bio {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #666;
+  text-align: center;
+  padding: 0 40rpx;
+}
+
+.note-count-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24rpx;
+  padding: 16rpx 0;
+}
+
+.note-count-num {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #333;
+}
+
+.follow-row {
+  display: flex;
+  width: 100%;
+  margin-top: 20rpx;
+  gap: 16rpx;
+}
+
+.follow-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+
+.follow-num {
+  font-size: 38rpx;
+  font-weight: 800;
+  color: #333;
+}
+
+.follow-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.follow-btn, .edit-btn {
+  margin-top: 20rpx;
+  padding: 14rpx 60rpx;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  border: none;
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.edit-btn {
+  background: #fff;
+  color: #666;
+  border: 1rpx solid #ddd;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.user-notes {
+  padding-bottom: 40rpx;
+}
+
+/* 复用首页瀑布流样式 */
+.waterfall { display: flex; flex-direction: row; gap: 16rpx; }
+.waterfall-col { flex: 1; }
+.note-card { overflow: hidden; padding: 0; margin-bottom: 16rpx; }
+.note-cover { width: 100%; display: block; }
+.note-info { padding: 16rpx; }
+.note-title { font-size: 28rpx; font-weight: 500; margin-bottom: 8rpx; display: block; }
+.empty-tip { text-align: center; padding: 80rpx 0; }
+
+/* 粉丝/关注弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+}
+.list-modal {
+  width: 100%;
+  max-height: 60vh;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 16rpx 0 0;
+}
+.list-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 32rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.list-modal-title { font-size: 32rpx; font-weight: 600; }
+.list-modal-close { font-size: 36rpx; color: #999; padding: 8rpx; }
+.list-modal-body { max-height: 50vh; padding: 0 24rpx; }
+.list-user-item { gap: 20rpx; padding: 24rpx 0; border-bottom: 1rpx solid #f5f5f5; }
+.list-user-info { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.list-user-name { font-size: 30rpx; font-weight: 500; }

@@ -1,0 +1,214 @@
+/* 顶部栏 */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 24rpx;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.school-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 14rpx 22rpx;
+  flex-shrink: 0;
+}
+
+.school-icon { font-size: 28rpx; }
+
+.school-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  max-width: 140rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.school-arrow { font-size: 22rpx; color: #999; }
+
+.sort-toggle {
+  font-size: 24rpx;
+  background: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 14rpx 20rpx;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.search-bar-inline {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  height: 64rpx;
+  background: #f5f5f5;
+  border-radius: 40rpx;
+  padding: 0 28rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+}
+
+.search-placeholder {
+  font-size: 26rpx;
+  color: #bbb;
+}
+
+/* 瀑布流 */
+.waterfall {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+  padding: 0 12rpx;
+}
+
+.waterfall-col {
+  flex: 1;
+}
+
+/* 笔记卡片 */
+.note-card {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+
+.card-img-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  display: block;
+  min-height: 200rpx;
+  background: #f0f0f0;
+}
+
+.img-count-badge {
+  position: absolute;
+  bottom: 12rpx;
+  right: 12rpx;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 16rpx;
+}
+
+.card-img-wrap {
+  position: relative;
+}
+
+.img-fade-in {
+  animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.card-img-placeholder {
+  width: 100%;
+  height: 220rpx;
+  background: linear-gradient(135deg, #fff0f0, #ffe8e0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-icon {
+  font-size: 60rpx;
+}
+
+.card-body {
+  padding: 16rpx 20rpx 20rpx;
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+  color: #222;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.avatar-xs {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #eee;
+  flex-shrink: 0;
+}
+
+.card-author {
+  flex: 1;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+  padding: 0 4rpx;
+}
+
+.card-tag {
+  font-size: 20rpx;
+  color: #5b8def;
+  background: rgba(91,141,239,0.08);
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx;
+}
+
+.card-time {
+  font-size: 20rpx;
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.card-campus {
+  font-size: 18rpx;
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.1);
+  padding: 2rpx 10rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.card-likes {
+  font-size: 22rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+
+/* 空状态 */
+.empty-tip {
+  display: flex;
+  justify-content: center;
+  padding-top: 200rpx;
+}

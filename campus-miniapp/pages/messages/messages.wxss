@@ -1,0 +1,153 @@
+.tab-bar {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+  gap: 8rpx;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab-item.active {
+  background: #fff0f0;
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.badge {
+  background: #ff6b6b;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 20rpx;
+  min-width: 32rpx;
+  text-align: center;
+}
+
+/* 私信项 */
+.chat-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 12rpx;
+  gap: 20rpx;
+}
+
+.avatar-wrap {
+  position: relative;
+}
+
+.dot {
+  position: absolute;
+  top: -2rpx;
+  right: -2rpx;
+  width: 16rpx;
+  height: 16rpx;
+  background: #ff6b6b;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+}
+
+.chat-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.chat-top {
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.chat-name {
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.chat-time {
+  font-size: 22rpx;
+}
+
+.chat-preview {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 通知项 */
+.notif-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 12rpx;
+  gap: 20rpx;
+}
+
+.notif-item.unread {
+  background: #fff8f8;
+}
+
+.notif-icon {
+  font-size: 40rpx;
+  width: 60rpx;
+  text-align: center;
+}
+
+.notif-body {
+  flex: 1;
+}
+
+.notif-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.notif-content {
+  font-size: 26rpx;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.notif-time {
+  font-size: 22rpx;
+}
+
+.read-all-bar {
+  text-align: right;
+  color: #ff6b6b;
+  font-size: 26rpx;
+  padding: 8rpx 0 16rpx;
+}
+
+.unread-dot {
+  width: 14rpx;
+  height: 14rpx;
+  background: #ff6b6b;
+  border-radius: 50%;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* 空状态 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+  gap: 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+}
